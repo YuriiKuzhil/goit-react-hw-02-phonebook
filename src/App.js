@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { nanoid } from 'nanoid';
+import toast, { Toaster } from 'react-hot-toast';
 import initialContacts from './data/initialContacts.json';
 class App extends Component {
   state = {
@@ -13,10 +14,18 @@ class App extends Component {
     const { name, value } = e.currentTarget;
     this.setState({ [name]: value });
   };
-
+  compareNames = () => {
+    const normalizeName = this.state.name.toLowerCase();
+    return this.state.contacts.some(
+      contact => contact.name.toLowerCase() === normalizeName,
+    );
+  };
   addContact = e => {
-    console.log(this.state.name);
     e.preventDefault();
+    if (this.compareNames()) {
+      toast.error(`${this.state.name} is already in contacts`);
+      return;
+    }
     const contact = {
       id: nanoid(5),
       name: this.state.name,
@@ -27,6 +36,7 @@ class App extends Component {
     }));
 
     this.setState({ name: '', number: '' });
+    toast.success('Contact added!');
   };
 
   changeFilter = e => {
@@ -91,6 +101,7 @@ class App extends Component {
             ))}
           </ul>
         </div>
+        <Toaster />
       </div>
     );
   }
