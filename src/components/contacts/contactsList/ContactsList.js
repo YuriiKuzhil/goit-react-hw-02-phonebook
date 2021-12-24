@@ -1,16 +1,21 @@
 import ContactsItem from './contactsItem';
+import { List, Message } from './ContactsList.styled';
 const ContactsList = ({ filteredContacts, deleteContact }) => {
   return (
-    <ul>
-      {filteredContacts.map(({ name, id, number }) => (
-        <ContactsItem
-          key={id}
-          name={name}
-          number={number}
-          onClick={() => deleteContact(id)}
-        />
-      ))}
-    </ul>
+    <List>
+      {filteredContacts.length === 0 ? (
+        <Message>😔 Sorry! No contacts</Message>
+      ) : (
+        filteredContacts.map(({ name, id, number }) => (
+          <ContactsItem
+            key={id}
+            name={name}
+            number={number}
+            onClick={() => deleteContact(id)}
+          />
+        ))
+      )}
+    </List>
   );
 };
 

@@ -1,12 +1,13 @@
+import { ListItem, ItemText, ItemButton } from './ContactsItem.styled';
 const ContactsItem = ({ name, number, onClick }) => {
   return (
-    <li>
-      <span>{name}</span>
-      <span>{number}</span>
-      <button type="button" onClick={onClick}>
+    <ListItem>
+      <ItemText>{name}:</ItemText>
+      <ItemText>{number}</ItemText>
+      <ItemButton type="button" onClick={onClick}>
         Delete
-      </button>
-    </li>
+      </ItemButton>
+    </ListItem>
   );
 };
 export default ContactsItem;

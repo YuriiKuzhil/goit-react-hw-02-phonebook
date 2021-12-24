@@ -21,7 +21,12 @@ class App extends Component {
 
   addContact = contact => {
     if (this.compareNames(contact.name)) {
-      toast.error(`${contact.name} is already in contacts`);
+      toast.error(`${contact.name} is already in contacts`, {
+        style: {
+          border: '1px solid #E8301C',
+          color: '#E8301C',
+        },
+      });
       return;
     }
 
@@ -30,7 +35,11 @@ class App extends Component {
     }));
 
     this.setState({ name: '', number: '' });
-    toast.success(`Contact ${contact.name} added!`);
+    toast.success(`Contact ${contact.name} added!`, {
+      style: {
+        border: '1px solid #49FF71',
+      },
+    });
   };
 
   changeFilter = e => {
@@ -50,12 +59,16 @@ class App extends Component {
     this.setState(prevState => ({
       contacts: prevState.contacts.filter(contact => contact.id !== id),
     }));
-    toast.success(`Contact deleted!`);
+    toast.success(`Contact deleted!`, {
+      style: {
+        border: '1px solid #49FF71',
+      },
+    });
   };
 
   render() {
     const { filter } = this.state;
-    const filteredContacts = this.findContacs();
+
     return (
       <Wrapper>
         <Title>Phonebook</Title>
@@ -64,11 +77,11 @@ class App extends Component {
           <ContactsTitle>Contacts</ContactsTitle>
           <ContactsFilter value={filter} onChange={this.changeFilter} />
           <ContactsList
-            filteredContacts={filteredContacts}
+            filteredContacts={this.findContacs()}
             deleteContact={this.deleteContact}
           />
         </ContactsContainer>
-        <Toaster />
+        <Toaster position="bottom-center" reverseOrder={false} />
       </Wrapper>
     );
   }
